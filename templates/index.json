@@ -110,16 +110,67 @@
       "settings": {
         "desktop_content_position": "center",
         "content_alignment": "center",
-        "color_scheme": "accent-2",
+        "color_scheme": "background-1",
         "full_width": true,
         "padding_top": 40,
         "padding_bottom": 52
+      }
+    },
+    "33987dbc-236f-402e-b0fc-0304d8f5fcab": {
+      "type": "collage",
+      "blocks": {
+        "template--18357745385794__33987dbc-236f-402e-b0fc-0304d8f5fcab-16792653594e1359b4-0": {
+          "type": "image",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/snow-boarder-on-snowy-mountain.jpg"
+          }
+        },
+        "template--18357745385794__33987dbc-236f-402e-b0fc-0304d8f5fcab-16792653594e1359b4-1": {
+          "type": "product",
+          "settings": {
+            "product": "the-collection-snowboard-hydrogen",
+            "second_image": true
+          }
+        },
+        "template--18357745385794__33987dbc-236f-402e-b0fc-0304d8f5fcab-16792653594e1359b4-2": {
+          "type": "collection",
+          "settings": {
+            "collection": "automated-collection"
+          }
+        }
+      },
+      "block_order": [
+        "template--18357745385794__33987dbc-236f-402e-b0fc-0304d8f5fcab-16792653594e1359b4-0",
+        "template--18357745385794__33987dbc-236f-402e-b0fc-0304d8f5fcab-16792653594e1359b4-1",
+        "template--18357745385794__33987dbc-236f-402e-b0fc-0304d8f5fcab-16792653594e1359b4-2"
+      ],
+      "settings": {
+        "heading": "Multimedia collage",
+        "heading_size": "h1",
+        "desktop_layout": "left",
+        "mobile_layout": "column",
+        "card_styles": "product-card-wrapper",
+        "color_scheme": "background-1",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "e406c0a5-7377-4309-a59b-976c867396a6": {
+      "type": "contact-form",
+      "settings": {
+        "heading": "Contact form",
+        "heading_size": "h1",
+        "color_scheme": "background-1",
+        "padding_top": 36,
+        "padding_bottom": 36
       }
     }
   },
   "order": [
     "image_banner",
     "featured_collection",
-    "75f22bf5-11e7-40b0-9173-318f2c405b87"
+    "75f22bf5-11e7-40b0-9173-318f2c405b87",
+    "33987dbc-236f-402e-b0fc-0304d8f5fcab",
+    "e406c0a5-7377-4309-a59b-976c867396a6"
   ]
 }

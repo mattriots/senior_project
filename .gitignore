@@ -1,0 +1,9 @@
+// git ignore all node_modules
+./node_modules
+/node_modules
+// git ignore all picture files
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.webp

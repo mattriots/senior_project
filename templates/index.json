@@ -6,7 +6,7 @@
         "heading": {
           "type": "heading",
           "settings": {
-            "heading": "Image banner",
+            "heading": "Matt DePauw's Senior Project",
             "heading_size": "h0"
           }
         },
@@ -73,10 +73,53 @@
         "padding_top": 28,
         "padding_bottom": 36
       }
+    },
+    "75f22bf5-11e7-40b0-9173-318f2c405b87": {
+      "type": "rich-text",
+      "blocks": {
+        "template--18357745385794__75f22bf5-11e7-40b0-9173-318f2c405b87-16792644009c8c210a-0": {
+          "type": "heading",
+          "settings": {
+            "heading": "<p>Goals<\/p>",
+            "heading_size": "h1"
+          }
+        },
+        "template--18357745385794__75f22bf5-11e7-40b0-9173-318f2c405b87-16792644009c8c210a-1": {
+          "type": "text",
+          "settings": {
+            "text": "<p>My goals for this project are to show off all the skills I've learned here at Cal Poly as well as skills I've learned as an Shopify Developer.<\/p>"
+          }
+        },
+        "template--18357745385794__75f22bf5-11e7-40b0-9173-318f2c405b87-16792644009c8c210a-2": {
+          "type": "button",
+          "settings": {
+            "button_label": "Github",
+            "button_link": "https:\/\/github.com\/mattriots",
+            "button_style_secondary": false,
+            "button_label_2": "LinkedIn",
+            "button_link_2": "https:\/\/www.linkedin.com\/in\/matt-depauw\/",
+            "button_style_secondary_2": false
+          }
+        }
+      },
+      "block_order": [
+        "template--18357745385794__75f22bf5-11e7-40b0-9173-318f2c405b87-16792644009c8c210a-0",
+        "template--18357745385794__75f22bf5-11e7-40b0-9173-318f2c405b87-16792644009c8c210a-1",
+        "template--18357745385794__75f22bf5-11e7-40b0-9173-318f2c405b87-16792644009c8c210a-2"
+      ],
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "color_scheme": "accent-2",
+        "full_width": true,
+        "padding_top": 40,
+        "padding_bottom": 52
+      }
     }
   },
   "order": [
     "image_banner",
-    "featured_collection"
+    "featured_collection",
+    "75f22bf5-11e7-40b0-9173-318f2c405b87"
   ]
 }

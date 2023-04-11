@@ -1,12 +1,519 @@
-{% schema %}
-  {
-    "name": "Section name",
-    "settings": []
+{% comment %}
+** Image with text **
+{% endcomment %}
+{{ 'custom-margins.css' | asset_url | stylesheet_tag }}
+
+{% comment %} Content settings {% endcomment %}
+{%- assign blocks = section.blocks -%}
+
+{% comment %} Check to see if the first block is text. 
+if so we will need to reverse the wrap when in mobile size {% endcomment %}
+{% for block in blocks %}
+
+        {% if forloop.first and block.type != 'image' %}
+          {% assign reverse-container = true %}
+        {% endif %}
+
+{% endfor %}
+{% comment %} End content settings {% endcomment %}
+
+{% comment %} Section specific CSS {% endcomment %}
+{% style %}
+  #shopify-section-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+    {% if section.settings.with == 'wide' %}
+      width: 100%;
+    {% endif %}
   }
+    #shopify-section-{{ section.id }} .container-two-point-oh a:hover{
+      text-decoration: none;
+    }
+ 
+  @media only screen and (max-width: 768px) {
+  #shopify-section-{{ section.id }} {
+    padding-top: 40px;
+    padding-bottom: 40px;
+     }
+
+    }
+
+  {% render 'css-loop',
+          css: section.settings.custom_css,
+          id: section.id
+  %}
+  /* Co-Curator Matt Custom CSS for proper styling */
+.image-with-text-custom__text {
+  flex-direction: column;
+  justify-content: flex-start;
+  padding-top: 40px;
+  background-color: #f5f5f5;
+  padding-bottom:30px;
+  padding-left:30px;
+  
+}
+.image-with-text-custom__image {
+  background-color: #f5f5f5;
+  /* margin-bottom:20px; */
+}
+  /* Co-Curator Matt Custom CSS for rounded boxes */
+.block-right-rounded {
+  border-top-right-radius: 16px;
+  border-bottom-right-radius: 16px;
+}
+
+.block-left-rounded {
+  border-top-left-radius: 16px;
+  border-bottom-left-radius: 16px;
+}
+
+  /* Co-Curator Matt Custom CSS correct color of boxes */
+.button-primary-overide {
+  background:#ffffff !important;
+  color:#101519 !important;
+  font-weight: 400!important;
+}
+
+.button-primary-overide:hover {
+  background:#000000 !important;
+  color:#ffffff !important;
+}
+ /* Co-Curator Matt Custom CSS reverses order or stack when image comes second */
+.reverse-wrap {
+  flex-wrap: wrap-reverse !important;
+}
+
+ /* Co-Curator Matt Custom CSS for rounded boxes on mobile */
+@media only screen and (max-width: 798px) 
+{
+  .image-with-text-custom__image {
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+    border-bottom-right-radius: 0px;
+    border-bottom-left-radius: 0px;
+    margin-bottom:0px;
+  }
+   .image-with-text-custom__text {
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 16px;
+    border-bottom-left-radius: 16px;
+    padding-top: 24px;
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}
+ /* Co-Curator Matt Custom CSS for font weight */
+.h2-weight-override {
+font-weight: 450;
+color: #ffffff;
+padding-bottom: 30px;
+line-height: 1.2;
+}
+ /* Co-Curator Matt Custom CSS for different page breaks */
+@media (min-width: 1280px) {
+  .h2-font-overide {
+    font-size: 2.3rem;
+  }
+}
+
+@media only screen and (max-width: 1279px) and (min-width: 768px) {
+  .h2-font-overide {
+    font-size: 2rem;
+    letter-spacing: 0.0025em;
+  }
+}
+
+@media (max-width: 767px) {
+   .h2-font-overide {
+    font-size: 28px;
+    letter-spacing: 0.005em;
+    font-weight: 500;
+  }
+}
+
+@media only screen and (max-width: 1080px) and (min-width: 768px) {
+  .h2-font-overide {
+    font-size: 1.7rem!important;
+  }
+  .h2-padding-overide {
+     padding: 24px !important;
+  }
+}
+
+
+{% endstyle %}
+
+{% comment %} HTML markup {% endcomment %}
+<section class="section
+                {{ section.settings.css_class }}
+                is-width-{{ section.settings.width }}
+                  has-no-side-gutter
+                  has-background
+                {% if section.settings.width == 'wide' %}
+                  equal-columns--outside-trim
+                {% endif %}
+                {% if section.settings.width == 'wide' %}
+                  container-two-point-oh
+                {% endif %}
+                "
+              >
+  <div class=" container {% if reverse-container %} reverse-wrap {% endif %}">
+    {% if blocks.size > 0 %}
+      {% for block in blocks %}
+
+        {% if block.type != 'image' %}
+
+          {% comment %} Content settings {% endcomment %}
+          {%- assign text = block.settings.text -%}
+          {% comment %} End content settings {% endcomment %}
+
+          {% comment %} Is the color set to transparent? {% endcomment %}
+          {%- assign background_alpha = block.settings.background | color_extract: 'alpha' -%}
+          {%- assign text_alpha = block.settings.text_color | color_extract: 'alpha' -%}
+          {% comment %} Block specific CSS {% endcomment %}
+          {% capture block_css -%}
+
+            {% comment %} .image-with-text__heading {
+              color: {%- if text_alpha != 0 -%}{{ block.settings.text_color }}{%- else -%}{{ settings.heading_color }}{%- endif -%};
+              font-size: 40px;
+              font-weight: 400;
+            } {% endcomment %}
+
+            .image-with-text__text {
+              color: {%- if text_alpha != 0 -%}{{ block.settings.text_color }}{%- else -%}{{ settings.regular_color }}{%- endif -%};
+            }
+          {%- endcapture -%}
+
+          {% style %}
+            #shopify-section-{{ block.id }} {
+                background-color: {%- if background_alpha != 0 -%}{{ block.settings.background }}{% endif %};
+              }
+            {% render 'css-loop',
+                    css: block_css,
+                    id: block.id
+            %}
+          {% endstyle %}
+
+          <div class="image-with-text__text-column
+                      h2-padding-overide 
+                      image-with-text__column
+                      image-with-text-custom__text
+                      {% comment %} Roundes the correct edge, depending on if its left or right on screen {% endcomment %}
+                      {% if forloop.first %} block-left-rounded  {% else %} block-right-rounded {% endif %}
+                      {% render 'column-width', value: forloop.length %}
+                      medium-down--one-whole
+                      column
+                      has-padding-left
+                      has-padding-right
+                      {% if background_alpha != 0 %}has-background {% endif %}
+                      is-flex
+                      is-flex-wrap
+                      is-justify-{{ block.settings.alignment }}
+                      is-align-{{ block.settings.vertical_position }}
+                      "
+                      {% if type != 'block' %}
+                        {{ block.shopify_attributes }} id="shopify-section-{{ block.id }}"
+                      {% endif %}>
+            <div class="image-with-text__wrapper ">
+              {% if block.settings.title != blank %}
+                <h2 class="h2-font-overide h2-weight-override text-align-{{ block.settings.alignment }}" >
+             
+                    {{ block.settings.title }}
+                  
+                </h2>
+              {% endif %}
+
+              {% if text != blank %}
+                <div class="image-with-text__text text-align-{{ block.settings.alignment }} content">
+                  {{ text }}
+                </div>
+              {% endif %}
+
+              {% if block.settings.button_label != blank %}
+                <div class="buttons  is-{{ block.settings.alignment }}">
+                  {% render 'button',
+                          label: block.settings.button_label,
+                          href: block.settings.link,
+                          style: block.settings.button_style,
+                          class: "button-primary button-primary-overide"
+                          type: "link"
+                  %}
+                  
+                  
+                </div>
+              {% endif %}
+            </div>
+          </div>
+
+        {% elsif block.type == 'image' %}
+
+          {% comment %} Content settings {% endcomment %}
+          {%- assign image = block.settings.image -%}
+          {% comment %} End content settings {% endcomment %}
+
+          <div class="image-with-text__image-column
+          image-with-text__column
+          {% comment %} add-some-hover {% endcomment %}
+          
+          {% if forloop.length == 1 %}
+            one-whole
+          {% elsif forloop.length == 2 %}
+            one-half
+          {% elsif forloop.length == 3 %}
+            one-third
+          {% endif %}
+          medium-down--one-whole
+          column
+          is-flex
+          is-align-center
+          image-crop--none" {% if type != 'block' %}{{ block.shopify_attributes }} id="shopify-section-{{ block.id }}"{% endif %}>
+            {% if block.settings.image_link %}
+              <a class="image-with-text__link" href="{{ block.settings.image_link }}">
+            {% endif %}
+              {% if image != blank %}
+              {% assign class_var = ''%}
+              {% if section.settings.has_zoom_enabled == true %}
+              {% assign class_var = 'image-with-text__image'%}
+              {% endif %}
+
+              {% comment %} Roundes the correct edge, depending on if its left or right on screen {% endcomment %}
+              {% if forloop.first %}  
+                {% render 'image-element',
+                        image: image,
+                        alt: image.alt,
+                        stretch_width: true,
+                        additional_classes: "class_var image-with-text-custom__image block-left-rounded",
+                        special_classes:
+                      %}  
+                {% else %} 
+                  {% render 'image-element',
+                        image: image,
+                        alt: image.alt,
+                        stretch_width: true,
+                        additional_classes: "class_var image-with-text-custom__image block-right-rounded",
+                        special_classes: 
+                        
+                    %}
+                {% endif %}
+              {% else %}
+                {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+              {% endif %}
+            {% if block.settings.image_link %}
+              </a>
+            {% endif %}
+          </div>
+        {% endif %}
+
+    {% endfor %}
+  {% endif %}
+
+  </div>
+</section>
+<script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+{% schema %}
+{
+  "name": "Media Promotion",
+  "class": "image-with-text image-with-text-1",
+  "max_blocks": 2,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "width",
+      "label": "Width",
+      "default": "standard",
+      "options": [
+        {
+          "value": "standard",
+          "label": "Standard"
+        },
+        {
+          "value": "wide",
+          "label": "Wide"
+        }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top spacing",
+      "min": 0,
+      "max": 80,
+      "default": 80,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom spacing",
+      "default": 80,
+      "min": 0,
+      "max": 80,
+      "unit": "px"
+    },
+    {
+      "type": "header",
+      "content": "Image"
+    },
+    {
+      "type": "header",
+      "content": "Advanced",
+      "info": "[Learn more](https://help.outofthesandbox.com/hc/en-us/articles/360022329373)"
+    },
+    {
+      "type": "text",
+      "id": "css_class",
+      "label": "CSS Class"
+    },
+    {
+      "type": "textarea",
+      "id": "custom_css",
+      "label": "Custom CSS"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image",
+      "name": "Image",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image",
+          "info": "1024 x 1024px recommended"
+        },
+        {
+          "type": "url",
+          "id": "image_link",
+          "label": "Link"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "name": "Text",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Heading",
+          "default": "Heading text here"
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Button label",
+          "default": "View all"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Button link"
+        },
+        {
+          "type": "select",
+          "id": "button_style",
+          "label": "Button style",
+          "options": [
+            {
+              "value": "button--primary",
+              "label": "Primary"
+            },
+            {
+              "value": "button--secondary",
+              "label": "Secondary"
+            },
+            {
+              "value": "button--link-style",
+              "label": "Link style"
+            }
+          ],
+          "default": "button--primary"
+        },
+        {
+          "type": "header",
+          "content": "Colors"
+        },
+        {
+          "type": "color",
+          "id": "background",
+          "label": "Background",
+          "default": "rgba(63, 70, 78, 1)"
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "Text",
+          "default": "rgba(255,255,255,1)"
+        },
+        {
+          "type": "header",
+          "content": "Layout"
+        },
+        {
+          "type": "select",
+          "id": "alignment",
+          "label": "Alignment",
+          "options": [
+            {
+              "value": "left",
+              "label": "Left"
+            },
+            {
+              "value": "center",
+              "label": "Center"
+            },
+            {
+              "value": "right",
+              "label": "Right"
+            }
+          ],
+          "default": "left"
+        },
+        {
+          "type": "select",
+          "id": "vertical_position",
+          "label": "Vertical position",
+          "options": [
+            {
+              "value": "start",
+              "label": "Top"
+            },
+            {
+              "value": "center",
+              "label": "Middle"
+            },
+            {
+              "value": "end",
+              "label": "Bottom"
+            }
+          ],
+          "default": "center"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Media Promotion",
+      "category": "Image",
+      "settings": {
+          "padding_top": 80,
+          "padding_bottom": 80
+      },
+      "blocks": [
+        {
+          "type": "image"
+        },
+        {
+          "type": "text"
+        }
+      ]
+    }
+  ]
+}
 {% endschema %}
-
-{% stylesheet %}
-{% endstylesheet %}
-
-{% javascript %}
-{% endjavascript %}

@@ -279,22 +279,9 @@ line-height: 1.2;
 
               {% comment %} Roundes the correct edge, depending on if its left or right on screen {% endcomment %}
               {% if forloop.first %}  
-                {% render 'image-element',
-                        image: image,
-                        alt: image.alt,
-                        stretch_width: true,
-                        additional_classes: "class_var image-with-text-custom__image block-left-rounded",
-                        special_classes:
-                      %}  
+                {% render 'image-element', image: image, alt: image.alt, stretch_width: true, additional_classes: "class_var image-with-text-custom__image block-left-rounded" %}  
                 {% else %} 
-                  {% render 'image-element',
-                        image: image,
-                        alt: image.alt,
-                        stretch_width: true,
-                        additional_classes: "class_var image-with-text-custom__image block-right-rounded",
-                        special_classes: 
-                        
-                    %}
+                  {% render 'image-element', image: image, alt: image.alt, stretch_width: true, additional_classes: "class_var image-with-text-custom__image block-right-rounded" %}
                 {% endif %}
               {% else %}
                 {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
@@ -517,3 +504,30 @@ line-height: 1.2;
   ]
 }
 {% endschema %}
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: |-
+    {% render 'image-element',
+                            image: image,
+                            alt: image.alt,
+                            stretch_width: true,
+                            additional_classes: "class_var image-with-text-custom__image block-left-rounded",
+                            special_classes:
+                          %}
+  to: '{% render ''image-element'', image: image, alt: image.alt, stretch_width: true,
+    additional_classes: "class_var image-with-text-custom__image block-left-rounded"
+    %}'
+  position: 9255..9416
+- from: "{% render 'image-element',\n                        image: image,\n                        alt:
+    image.alt,\n                        stretch_width: true,\n                        additional_classes:
+    \"class_var image-with-text-custom__image block-right-rounded\",\n                        special_classes:
+    \n                        \n                    %}"
+  to: '{% render ''image-element'', image: image, alt: image.alt, stretch_width: true,
+    additional_classes: "class_var image-with-text-custom__image block-right-rounded"
+    %}'
+  position: 9465..9627
+{% endcomment %}
